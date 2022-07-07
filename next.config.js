@@ -86,6 +86,10 @@ const nextConfig = {
         destination: '/bar',
       },
       {
+        source: '/donate',
+        destination: '/donate',
+      },
+      {
         source: '/add/:token*',
         destination: '/exchange/add/:token*',
       },
