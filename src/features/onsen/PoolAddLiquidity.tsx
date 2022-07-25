@@ -17,11 +17,11 @@ import { useActiveWeb3React } from '../../services/web3'
 import useTransactionDeadline from '../../hooks/useTransactionDeadline'
 import { useUSDCValue } from '../../hooks/useUSDCPrice'
 import TransactionConfirmationModal, { ConfirmationModalContent } from '../../modals/TransactionConfirmationModal'
-import { Field } from '../../state/mint/actions'
-import { useDerivedMintInfo, useMintActionHandlers, useMintState } from '../../state/mint/hooks'
+// import { Field } from '../../state/mint/actions'
+// import { useDerivedMintInfo, useMintActionHandlers, useMintState } from '../../state/mint/hooks'
 import { useTransactionAdder } from '../../state/transactions/hooks'
 import { useExpertModeManager, useUserSlippageToleranceWithDefault } from '../../state/user/hooks'
-import { ConfirmAddModalBottom } from '../legacy/liquidity/ConfirmAddModalBottom'
+//import { ConfirmAddModalBottom } from '../legacy/liquidity/ConfirmAddModalBottom'
 import CurrencyInputPanel from './CurrencyInputPanel'
 
 const DEFAULT_ADD_V2_SLIPPAGE_TOLERANCE = new Percent(50, 10_000)
@@ -39,29 +39,29 @@ const PoolDeposit = ({ currencyA, currencyB }) => {
 
   const oneCurrencyIsWETH = Boolean(
     chainId &&
-      ((currencyA && currencyEquals(currencyA, WNATIVE[chainId])) ||
-        (currencyB && currencyEquals(currencyB, WNATIVE[chainId])))
+    ((currencyA && currencyEquals(currencyA, WNATIVE[chainId])) ||
+      (currencyB && currencyEquals(currencyB, WNATIVE[chainId])))
   )
 
   const [isExpertMode] = useExpertModeManager()
 
   // mint state
-  const { independentField, typedValue, otherTypedValue } = useMintState()
-  const {
-    dependentField,
-    currencies,
-    currencyBalances,
-    parsedAmounts,
-    price,
-    noLiquidity,
-    liquidityMinted,
-    poolTokenPercentage,
-    error,
-  } = useDerivedMintInfo(currencyA ?? undefined, currencyB ?? undefined)
+  // const { independentField, typedValue, otherTypedValue } = useMintState()
+  // const {
+  //   dependentField,
+  //   currencies,
+  //   currencyBalances,
+  //   parsedAmounts,
+  //   price,
+  //   noLiquidity,
+  //   liquidityMinted,
+  //   poolTokenPercentage,
+  //   error,
+  // } = useDerivedMintInfo(currencyA ?? undefined, currencyB ?? undefined)
 
-  const { onFieldAInput, onFieldBInput } = useMintActionHandlers(noLiquidity)
+  // const { onFieldAInput, onFieldBInput } = useMintActionHandlers(noLiquidity)
 
-  const isValid = !error
+  // const isValid = !error
 
   // modal and loading
   const [showConfirm, setShowConfirm] = useState<boolean>(false)
@@ -75,191 +75,191 @@ const PoolDeposit = ({ currencyA, currencyB }) => {
   const [txHash, setTxHash] = useState<string>('')
 
   // get formatted amounts
-  const formattedAmounts = {
-    [independentField]: typedValue,
-    [dependentField]: noLiquidity ? otherTypedValue : parsedAmounts[dependentField]?.toSignificant(6) ?? '',
-  }
+  // const formattedAmounts = {
+  //   [independentField]: typedValue,
+  //   [dependentField]: noLiquidity ? otherTypedValue : parsedAmounts[dependentField]?.toSignificant(6) ?? '',
+  // }
 
-  // get the max amounts user can add
-  const maxAmounts: { [field in Field]?: CurrencyAmount<Currency> } = [Field.CURRENCY_A, Field.CURRENCY_B].reduce(
-    (accumulator, field) => {
-      return {
-        ...accumulator,
-        [field]: maxAmountSpend(currencyBalances[field]),
-      }
-    },
-    {}
-  )
+  // // get the max amounts user can add
+  // const maxAmounts: { [field in Field]?: CurrencyAmount<Currency> } = [Field.CURRENCY_A, Field.CURRENCY_B].reduce(
+  //   (accumulator, field) => {
+  //     return {
+  //       ...accumulator,
+  //       [field]: maxAmountSpend(currencyBalances[field]),
+  //     }
+  //   },
+  //   {}
+  // )
 
-  const atMaxAmounts: { [field in Field]?: CurrencyAmount<Currency> } = [Field.CURRENCY_A, Field.CURRENCY_B].reduce(
-    (accumulator, field) => {
-      return {
-        ...accumulator,
-        [field]: maxAmounts[field]?.equalTo(parsedAmounts[field] ?? '0'),
-      }
-    },
-    {}
-  )
+  // const atMaxAmounts: { [field in Field]?: CurrencyAmount<Currency> } = [Field.CURRENCY_A, Field.CURRENCY_B].reduce(
+  //   (accumulator, field) => {
+  //     return {
+  //       ...accumulator,
+  //       [field]: maxAmounts[field]?.equalTo(parsedAmounts[field] ?? '0'),
+  //     }
+  //   },
+  //   {}
+  // )
 
   const routerContract = useRouterContract()
 
   // check whether the user has approved the router on the tokens
-  const [approvalA, approveACallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_A], routerContract?.address)
-  const [approvalB, approveBCallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_B], routerContract?.address)
+  // const [approvalA, approveACallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_A], routerContract?.address)
+  // const [approvalB, approveBCallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_B], routerContract?.address)
 
-  const currencyAFiatValue = useUSDCValue(parsedAmounts[Field.CURRENCY_A] ?? currencyBalances[Field.CURRENCY_A])
-  const currencyBFiatValue = useUSDCValue(parsedAmounts[Field.CURRENCY_B] ?? currencyBalances[Field.CURRENCY_B])
+  // const currencyAFiatValue = useUSDCValue(parsedAmounts[Field.CURRENCY_A] ?? currencyBalances[Field.CURRENCY_A])
+  // const currencyBFiatValue = useUSDCValue(parsedAmounts[Field.CURRENCY_B] ?? currencyBalances[Field.CURRENCY_B])
 
   const addTransaction = useTransactionAdder()
 
-  async function onAdd() {
-    if (!chainId || !library || !account || !routerContract) return
+  // async function onAdd() {
+  //   if (!chainId || !library || !account || !routerContract) return
 
-    const { [Field.CURRENCY_A]: parsedAmountA, [Field.CURRENCY_B]: parsedAmountB } = parsedAmounts
+  //   const { [Field.CURRENCY_A]: parsedAmountA, [Field.CURRENCY_B]: parsedAmountB } = parsedAmounts
 
-    console.log({ parsedAmountA, parsedAmountB, currencyA, currencyB, deadline })
+  //   console.log({ parsedAmountA, parsedAmountB, currencyA, currencyB, deadline })
 
-    if (!parsedAmountA || !parsedAmountB || !currencyA || !currencyB || !deadline) {
-      return
-    }
+  //   if (!parsedAmountA || !parsedAmountB || !currencyA || !currencyB || !deadline) {
+  //     return
+  //   }
 
-    const amountsMin = {
-      [Field.CURRENCY_A]: calculateSlippageAmount(parsedAmountA, noLiquidity ? ZERO_PERCENT : allowedSlippage)[0],
-      [Field.CURRENCY_B]: calculateSlippageAmount(parsedAmountB, noLiquidity ? ZERO_PERCENT : allowedSlippage)[0],
-    }
+  //   const amountsMin = {
+  //     [Field.CURRENCY_A]: calculateSlippageAmount(parsedAmountA, noLiquidity ? ZERO_PERCENT : allowedSlippage)[0],
+  //     [Field.CURRENCY_B]: calculateSlippageAmount(parsedAmountB, noLiquidity ? ZERO_PERCENT : allowedSlippage)[0],
+  //   }
 
-    let estimate,
-      method: (...args: any) => Promise<TransactionResponse>,
-      args: Array<string | string[] | number>,
-      value: BigNumber | null
-    if (currencyA.isNative || currencyB.isNative) {
-      const tokenBIsETH = currencyB.isNative
-      estimate = routerContract.estimateGas.addLiquidityETH
-      method = routerContract.addLiquidityETH
-      args = [
-        (tokenBIsETH ? currencyA : currencyB)?.wrapped?.address ?? '', // token
-        (tokenBIsETH ? parsedAmountA : parsedAmountB).quotient.toString(), // token desired
-        amountsMin[tokenBIsETH ? Field.CURRENCY_A : Field.CURRENCY_B].toString(), // token min
-        amountsMin[tokenBIsETH ? Field.CURRENCY_B : Field.CURRENCY_A].toString(), // eth min
-        account,
-        deadline.toHexString(),
-      ]
-      value = BigNumber.from((tokenBIsETH ? parsedAmountB : parsedAmountA).quotient.toString())
-    } else {
-      estimate = routerContract.estimateGas.addLiquidity
-      method = routerContract.addLiquidity
-      args = [
-        currencyA?.wrapped?.address ?? '',
-        currencyB?.wrapped?.address ?? '',
-        parsedAmountA.quotient.toString(),
-        parsedAmountB.quotient.toString(),
-        amountsMin[Field.CURRENCY_A].toString(),
-        amountsMin[Field.CURRENCY_B].toString(),
-        account,
-        deadline.toHexString(),
-      ]
-      value = null
-    }
+  //   let estimate,
+  //     method: (...args: any) => Promise<TransactionResponse>,
+  //     args: Array<string | string[] | number>,
+  //     value: BigNumber | null
+  //   if (currencyA.isNative || currencyB.isNative) {
+  //     const tokenBIsETH = currencyB.isNative
+  //     estimate = routerContract.estimateGas.addLiquidityETH
+  //     method = routerContract.addLiquidityETH
+  //     args = [
+  //       (tokenBIsETH ? currencyA : currencyB)?.wrapped?.address ?? '', // token
+  //       (tokenBIsETH ? parsedAmountA : parsedAmountB).quotient.toString(), // token desired
+  //       amountsMin[tokenBIsETH ? Field.CURRENCY_A : Field.CURRENCY_B].toString(), // token min
+  //       amountsMin[tokenBIsETH ? Field.CURRENCY_B : Field.CURRENCY_A].toString(), // eth min
+  //       account,
+  //       deadline.toHexString(),
+  //     ]
+  //     value = BigNumber.from((tokenBIsETH ? parsedAmountB : parsedAmountA).quotient.toString())
+  //   } else {
+  //     estimate = routerContract.estimateGas.addLiquidity
+  //     method = routerContract.addLiquidity
+  //     args = [
+  //       currencyA?.wrapped?.address ?? '',
+  //       currencyB?.wrapped?.address ?? '',
+  //       parsedAmountA.quotient.toString(),
+  //       parsedAmountB.quotient.toString(),
+  //       amountsMin[Field.CURRENCY_A].toString(),
+  //       amountsMin[Field.CURRENCY_B].toString(),
+  //       account,
+  //       deadline.toHexString(),
+  //     ]
+  //     value = null
+  //   }
 
-    setAttemptingTxn(true)
-    await estimate(...args, value ? { value } : {})
-      .then((estimatedGasLimit) =>
-        method(...args, {
-          ...(value ? { value } : {}),
-          gasLimit: calculateGasMargin(estimatedGasLimit),
-        }).then((response) => {
-          setAttemptingTxn(false)
+  //   setAttemptingTxn(true)
+  //   await estimate(...args, value ? { value } : {})
+  //     .then((estimatedGasLimit) =>
+  //       method(...args, {
+  //         ...(value ? { value } : {}),
+  //         gasLimit: calculateGasMargin(estimatedGasLimit),
+  //       }).then((response) => {
+  //         setAttemptingTxn(false)
 
-          addTransaction(response, {
-            summary: i18n._(
-              t`Add ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(3)} ${
-                currencies[Field.CURRENCY_A]?.symbol
-              } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(3)} ${currencies[Field.CURRENCY_B]?.symbol}`
-            ),
-          })
+  //         addTransaction(response, {
+  //           summary: i18n._(
+  //             t`Add ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(3)} ${
+  //               currencies[Field.CURRENCY_A]?.symbol
+  //             } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(3)} ${currencies[Field.CURRENCY_B]?.symbol}`
+  //           ),
+  //         })
 
-          setTxHash(response.hash)
+  //         setTxHash(response.hash)
 
-          ReactGA.event({
-            category: 'Liquidity',
-            action: 'Add',
-            label: [currencies[Field.CURRENCY_A]?.symbol, currencies[Field.CURRENCY_B]?.symbol].join('/'),
-          })
-        })
-      )
-      .catch((error) => {
-        setAttemptingTxn(false)
-        // we only care if the error is something _other_ than the user rejected the tx
-        if (error?.code !== 4001) {
-          console.error(error)
-        }
-      })
-  }
+  //         ReactGA.event({
+  //           category: 'Liquidity',
+  //           action: 'Add',
+  //           label: [currencies[Field.CURRENCY_A]?.symbol, currencies[Field.CURRENCY_B]?.symbol].join('/'),
+  //         })
+  //       })
+  //     )
+  //     .catch((error) => {
+  //       setAttemptingTxn(false)
+  //       // we only care if the error is something _other_ than the user rejected the tx
+  //       if (error?.code !== 4001) {
+  //         console.error(error)
+  //       }
+  //     })
+  // }
 
-  const handleDismissConfirmation = useCallback(() => {
-    setShowConfirm(false)
-    // if there was a tx hash, we want to clear the input
-    if (txHash) {
-      onFieldAInput('')
-    }
-    setTxHash('')
-  }, [onFieldAInput, txHash])
+  // const handleDismissConfirmation = useCallback(() => {
+  //   setShowConfirm(false)
+  //   // if there was a tx hash, we want to clear the input
+  //   if (txHash) {
+  //     onFieldAInput('')
+  //   }
+  //   setTxHash('')
+  // }, [onFieldAInput, txHash])
 
-  const modalHeader = () => {
-    return noLiquidity ? (
-      <div className="pb-4">
-        <div className="flex items-center justify-start gap-3">
-          <div className="text-2xl font-bold text-high-emphesis">
-            {currencies[Field.CURRENCY_A]?.symbol + '/' + currencies[Field.CURRENCY_B]?.symbol}
-          </div>
-          <DoubleCurrencyLogo currency0={currencyA} currency1={currencyB} size={48} />
-        </div>
-      </div>
-    ) : (
-      <div className="pb-4">
-        <div className="flex items-center justify-start gap-3">
-          <div className="text-xl font-bold md:text-3xl text-high-emphesis">{liquidityMinted?.toSignificant(6)}</div>
-          <div className="grid grid-flow-col gap-2">
-            <DoubleCurrencyLogo currency0={currencyA} currency1={currencyB} size={48} />
-          </div>
-        </div>
-        <div className="text-lg font-medium md:text-2xl text-high-emphesis">
-          {currencies[Field.CURRENCY_A]?.symbol}/{currencies[Field.CURRENCY_B]?.symbol}
-          &nbsp;{i18n._(t`Pool Tokens`)}
-        </div>
-        <div className="pt-3 text-xs italic text-secondary">
-          {i18n._(
-            t`Output is estimated. If the price changes by more than ${allowedSlippage.toSignificant(
-              4
-            )}% your transaction will revert.`
-          )}
-        </div>
-      </div>
-    )
-  }
+  // const modalHeader = () => {
+  //   return noLiquidity ? (
+  //     <div className="pb-4">
+  //       <div className="flex items-center justify-start gap-3">
+  //         <div className="text-2xl font-bold text-high-emphesis">
+  //           {currencies[Field.CURRENCY_A]?.symbol + '/' + currencies[Field.CURRENCY_B]?.symbol}
+  //         </div>
+  //         <DoubleCurrencyLogo currency0={currencyA} currency1={currencyB} size={48} />
+  //       </div>
+  //     </div>
+  //   ) : (
+  //     <div className="pb-4">
+  //       <div className="flex items-center justify-start gap-3">
+  //         <div className="text-xl font-bold md:text-3xl text-high-emphesis">{liquidityMinted?.toSignificant(6)}</div>
+  //         <div className="grid grid-flow-col gap-2">
+  //           <DoubleCurrencyLogo currency0={currencyA} currency1={currencyB} size={48} />
+  //         </div>
+  //       </div>
+  //       <div className="text-lg font-medium md:text-2xl text-high-emphesis">
+  //         {currencies[Field.CURRENCY_A]?.symbol}/{currencies[Field.CURRENCY_B]?.symbol}
+  //         &nbsp;{i18n._(t`Pool Tokens`)}
+  //       </div>
+  //       <div className="pt-3 text-xs italic text-secondary">
+  //         {i18n._(
+  //           t`Output is estimated. If the price changes by more than ${allowedSlippage.toSignificant(
+  //             4
+  //           )}% your transaction will revert.`
+  //         )}
+  //       </div>
+  //     </div>
+  //   )
+  // }
 
-  const modalBottom = () => {
-    return (
-      <ConfirmAddModalBottom
-        price={price}
-        currencies={currencies}
-        parsedAmounts={parsedAmounts}
-        noLiquidity={noLiquidity}
-        onAdd={onAdd}
-        poolTokenPercentage={poolTokenPercentage}
-      />
-    )
-  }
+  // const modalBottom = () => {
+  //   return (
+  //     <ConfirmAddModalBottom
+  //       price={price}
+  //       currencies={currencies}
+  //       parsedAmounts={parsedAmounts}
+  //       noLiquidity={noLiquidity}
+  //       onAdd={onAdd}
+  //       poolTokenPercentage={poolTokenPercentage}
+  //     />
+  //   )
+  // }
 
-  const pendingText = i18n._(
-    t`Supplying ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)} ${
-      currencies[Field.CURRENCY_A]?.symbol
-    } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)} ${currencies[Field.CURRENCY_B]?.symbol}`
-  )
+  // const pendingText = i18n._(
+  //   t`Supplying ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)} ${
+  //     currencies[Field.CURRENCY_A]?.symbol
+  //   } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)} ${currencies[Field.CURRENCY_B]?.symbol}`
+  // )
 
   return (
     <div>
-      <TransactionConfirmationModal
+      {/* <TransactionConfirmationModal
         isOpen={showConfirm}
         onDismiss={handleDismissConfirmation}
         attemptingTxn={attemptingTxn}
@@ -366,7 +366,7 @@ const PoolDeposit = ({ currencyA, currencyB }) => {
             </ButtonError>
           )}
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

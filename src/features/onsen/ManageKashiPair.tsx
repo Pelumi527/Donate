@@ -3,7 +3,7 @@ import { MinusIcon, PlusIcon } from '@heroicons/react/solid'
 import { t } from '@lingui/macro'
 import { useLingui } from '@lingui/react'
 import React, { useState } from 'react'
-import { useKashiPair } from '../kashi/context'
+// import { useKashiPair } from '../kashi/context'
 import KashiDeposit from './KashiDeposit'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import KashiWithdraw from './KashiWithdraw'
@@ -11,7 +11,7 @@ import KashiWithdraw from './KashiWithdraw'
 const ManageKashiPair = ({ farm }) => {
   const { i18n } = useLingui()
 
-  const kashiPair = useKashiPair(farm.pair.id)
+  // const kashiPair = useKashiPair(farm.pair.id)
 
   const [toggle, setToggle] = useState(true)
   const [useBento, setUseBento] = useState(false)
@@ -24,14 +24,12 @@ const ManageKashiPair = ({ farm }) => {
             <Switch
               checked={toggle}
               onChange={() => setToggle(!toggle)}
-              className={`${
-                toggle ? 'bg-blue border-blue' : 'bg-pink border-pink'
-              } bg-opacity-60 border border-opacity-80 relative inline-flex items-center h-[32px] rounded-full w-[54px] transition-colors focus:outline-none`}
+              className={`${toggle ? 'bg-blue border-blue' : 'bg-pink border-pink'
+                } bg-opacity-60 border border-opacity-80 relative inline-flex items-center h-[32px] rounded-full w-[54px] transition-colors focus:outline-none`}
             >
               <span
-                className={`${
-                  toggle ? 'translate-x-[1px] text-blue' : 'translate-x-[23px] text-pink'
-                } inline-block w-7 h-7 transform bg-white rounded-full transition-transform`}
+                className={`${toggle ? 'translate-x-[1px] text-blue' : 'translate-x-[23px] text-pink'
+                  } inline-block w-7 h-7 transform bg-white rounded-full transition-transform`}
               >
                 {toggle ? <PlusIcon /> : <MinusIcon />}
               </span>
@@ -57,11 +55,11 @@ const ManageKashiPair = ({ farm }) => {
         </Switch.Group>
         <div className="whitespace-nowrap">{toggle ? i18n._(t`Balance`) : i18n._(t`Available to Withdraw`)}</div>
       </div>
-      {toggle ? (
+      {/* {toggle ? (
         <KashiDeposit pair={kashiPair} useBento={useBento} />
       ) : (
         <KashiWithdraw pair={kashiPair} useBento={useBento} />
-      )}
+      )} */}
     </div>
   )
 }

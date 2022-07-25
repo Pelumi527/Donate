@@ -17,7 +17,7 @@ import { useRouter } from 'next/router'
 import Button from '../../components/Button'
 import { useCurrency } from '../../hooks/Tokens'
 import Typography from '../../components/Typography'
-import { useKashiPair } from '../kashi/context'
+// import { useKashiPair } from '../kashi/context'
 
 const InvestmentDetails = ({ farm }) => {
   const { i18n } = useLingui()
@@ -30,7 +30,7 @@ const InvestmentDetails = ({ farm }) => {
 
   const addTransaction = useTransactionAdder()
 
-  const kashiPair = useKashiPair(farm.pair.id)
+  // const kashiPair = useKashiPair(farm.pair.id)
 
   const [pendingTx, setPendingTx] = useState(false)
 
@@ -47,30 +47,30 @@ const InvestmentDetails = ({ farm }) => {
 
   const stakedAmount = useUserInfo(farm, liquidityToken)
 
-  const kashiAssetAmount =
-    kashiPair &&
-    stakedAmount &&
-    easyAmount(
-      BigNumber.from(stakedAmount.quotient.toString()).mulDiv(
-        kashiPair.currentAllAssets.value,
-        kashiPair.totalAsset.base
-      ),
-      kashiPair.asset
-    )
+  // const kashiAssetAmount =
+  //   kashiPair &&
+  //   stakedAmount &&
+  //   easyAmount(
+  //     BigNumber.from(stakedAmount.quotient.toString()).mulDiv(
+  //       kashiPair.currentAllAssets.value,
+  //       kashiPair.totalAsset.base
+  //     ),
+  //     kashiPair.asset
+  //   )
 
   const pendingReward = usePendingReward(farm)
   const pendingSushi = usePendingSushi(farm)
 
-  const positionFiatValue = CurrencyAmount.fromRawAmount(
-    USD[chainId],
-    farm.pair.type === PairType.KASHI
-      ? kashiAssetAmount?.usdValue.toString() ?? ZERO
-      : JSBI.BigInt(
-          ((Number(stakedAmount?.toExact() ?? '0') * farm.pair.reserveUSD) / farm.pair.totalSupply)
-            .toFixed(USD[chainId].decimals)
-            .toBigNumber(USD[chainId].decimals)
-        )
-  )
+  // const positionFiatValue = CurrencyAmount.fromRawAmount(
+  //   USD[chainId],
+  //   farm.pair.type === PairType.KASHI
+  //     ? kashiAssetAmount?.usdValue.toString() ?? ZERO
+  //     : JSBI.BigInt(
+  //         ((Number(stakedAmount?.toExact() ?? '0') * farm.pair.reserveUSD) / farm.pair.totalSupply)
+  //           .toFixed(USD[chainId].decimals)
+  //           .toBigNumber(USD[chainId].decimals)
+  //       )
+  // )
 
   const rewardValue =
     (farm?.rewards?.[0]?.rewardPrice ?? 0) * Number(pendingSushi?.toExact() ?? 0) +
@@ -102,7 +102,7 @@ const InvestmentDetails = ({ farm }) => {
         <div className="w-full h-0 font-bold bg-transparent border border-b-0 border-transparent rounded text-high-emphesis border-gradient-r-blue-pink-dark-800 opacity-20" />
         <div className="flex justify-between">
           <div className="flex flex-col justify-center space-y-2">
-            <div className="flex items-center space-x-2">
+            {/* <div className="flex items-center space-x-2">
               <CurrencyLogo currency={token0} size="30px" />
               {farm.pair.type === PairType.KASHI && (
                 <Typography>
@@ -115,7 +115,7 @@ const InvestmentDetails = ({ farm }) => {
                 </Typography>
               )}
               <Typography>{token0?.symbol}</Typography>
-            </div>
+            </div> */}
             {farm.pair.type === PairType.SWAP && (
               <div className="flex items-center space-x-2">
                 <CurrencyLogo currency={token1} size="30px" />
@@ -126,7 +126,7 @@ const InvestmentDetails = ({ farm }) => {
               </div>
             )}
           </div>
-          <Typography>{formatNumber(positionFiatValue?.toSignificant(6) ?? 0, true)}</Typography>
+          {/* <Typography>{formatNumber(positionFiatValue?.toSignificant(6) ?? 0, true)}</Typography> */}
         </div>
       </div>
       <div className="flex flex-col w-full space-y-4">

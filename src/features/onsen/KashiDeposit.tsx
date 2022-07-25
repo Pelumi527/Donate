@@ -12,7 +12,7 @@ import { ApprovalState, useApproveCallback } from '../../hooks/useApproveCallbac
 import { useCurrency } from '../../hooks/Tokens'
 import useKashiApproveCallback, { BentoApprovalState } from '../../hooks/useKashiApproveCallback'
 import CurrencyInputPanel from './CurrencyInputPanel'
-import Provider, { useKashiInfo } from '../kashi/context'
+// import Provider, { useKashiInfo } from '../kashi/context'
 import { tryParseAmount } from '../../functions'
 import Alert from '../../components/Alert'
 import { useUSDCValue } from '../../hooks/useUSDCPrice'
@@ -23,23 +23,23 @@ const KashiDeposit = ({ pair, useBento }) => {
   const { account, chainId } = useActiveWeb3React()
 
   const assetToken = useCurrency(pair?.asset.address) || undefined
-  const info = useKashiInfo()
+  // const info = useKashiInfo()
 
   const [depositValue, setDepositValue] = useState('')
 
   const assetNative = WNATIVE[chainId || 1].address === pair?.asset.address
 
-  const balanceAmount = useBento ? pair?.asset.bentoBalance : assetNative ? info?.ethBalance : pair?.asset.balance
-  const balance =
-    assetToken &&
-    balanceAmount &&
-    CurrencyAmount.fromRawAmount(assetNative ? WNATIVE[chainId || 1] : assetToken, balanceAmount)
+  // const balanceAmount = useBento ? pair?.asset.bentoBalance : assetNative ? info?.ethBalance : pair?.asset.balance
+  // const balance =
+  //   assetToken &&
+  //   balanceAmount &&
+  //   CurrencyAmount.fromRawAmount(assetNative ? WNATIVE[chainId || 1] : assetToken, balanceAmount)
 
-  const maxAmount = balance
+  // const maxAmount = balance
 
   const parsedDepositValue = tryParseAmount(depositValue, assetToken)
 
-  const fiatValue = useUSDCValue(parsedDepositValue ?? balance)
+  // const fiatValue = useUSDCValue(parsedDepositValue ?? balance)
 
   const [kashiApprovalState, approveKashiFallback, kashiPermit, onApproveKashi, onCook] = useKashiApproveCallback()
 
@@ -56,17 +56,17 @@ const KashiDeposit = ({ pair, useBento }) => {
     return `${i18n._(t`Deposit`)} ${pair?.asset.tokenInfo.symbol}`
   }
 
-  const error = !parsedDepositValue
-    ? 'Enter an amount'
-    : balance.lessThan(parsedDepositValue)
-    ? 'Insufficient balance'
-    : undefined
+  // const error = !parsedDepositValue
+  //   ? 'Enter an amount'
+  //   : balance.lessThan(parsedDepositValue)
+  //   ? 'Insufficient balance'
+  //   : undefined
 
-  const isValid = !error
+  // const isValid = !error
 
   return (
     <div className="flex flex-col space-y-4">
-      <CurrencyInputPanel
+      {/* <CurrencyInputPanel
         value={depositValue}
         currency={assetToken}
         id="add-liquidity-input-tokenb"
@@ -77,7 +77,7 @@ const KashiDeposit = ({ pair, useBento }) => {
         }}
         currencyBalance={balance}
         fiatValue={fiatValue}
-      />
+      /> */}
       {approveKashiFallback && (
         <Alert
           message={i18n._(
@@ -86,7 +86,7 @@ const KashiDeposit = ({ pair, useBento }) => {
           className="mb-4"
         />
       )}
-      {!account ? (
+      {/* {!account ? (
         <Web3Connect size="lg" color="blue" className="w-full" />
       ) : isValid &&
         !kashiPermit &&
@@ -129,11 +129,11 @@ const KashiDeposit = ({ pair, useBento }) => {
         >
           {error || i18n._(t`Confirm Deposit`)}
         </ButtonError>
-      )}
+      )} */}
     </div>
   )
 }
 
-KashiDeposit.Provider = Provider
+// KashiDeposit.Provider = Provider
 
 export default KashiDeposit

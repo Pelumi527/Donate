@@ -27,7 +27,7 @@ import {
 } from '@sushiswap/core-sdk'
 import { getAddress } from '@ethersproject/address'
 import { Chef, PairType } from './enum'
-import { useKashiPair } from '../kashi/context'
+//import { useKashiPair } from '../kashi/context'
 import { useCurrencyBalance } from '../../state/wallet/hooks'
 import { useUserInfo } from './hooks'
 
@@ -50,49 +50,49 @@ const ManageBar = ({ farm }) => {
     farm.pair.type === PairType.KASHI ? 'KMP' : 'SLP'
   )
 
-  const kashiPair = useKashiPair(farm.pair.id)
+  // const kashiPair = useKashiPair(farm.pair.id)
 
   const balance = useCurrencyBalance(account, liquidityToken)
 
   const stakedAmount = useUserInfo(farm, liquidityToken)
 
-  const balanceFiatValue = CurrencyAmount.fromRawAmount(
-    USD[chainId],
-    farm.pair.type === PairType.KASHI
-      ? kashiPair && balance
-        ? getUSDValue(
-            BigNumber.from(balance.quotient.toString()).mulDiv(
-              kashiPair.currentAllAssets.value,
-              kashiPair.totalAsset.base
-            ),
-            kashiPair.asset
-          ).toString()
-        : ZERO
-      : JSBI.BigInt(
-          ((Number(balance?.toExact() ?? '0') * farm.pair.reserveUSD) / farm.pair.totalSupply)
-            .toFixed(USD[chainId].decimals)
-            .toBigNumber(USD[chainId].decimals)
-        )
-  )
+  // const balanceFiatValue = CurrencyAmount.fromRawAmount(
+  //   USD[chainId],
+  //   farm.pair.type === PairType.KASHI
+  //     ? kashiPair && balance
+  //       ? getUSDValue(
+  //           BigNumber.from(balance.quotient.toString()).mulDiv(
+  //             kashiPair.currentAllAssets.value,
+  //             kashiPair.totalAsset.base
+  //           ),
+  //           kashiPair.asset
+  //         ).toString()
+  //       : ZERO
+  //     : JSBI.BigInt(
+  //         ((Number(balance?.toExact() ?? '0') * farm.pair.reserveUSD) / farm.pair.totalSupply)
+  //           .toFixed(USD[chainId].decimals)
+  //           .toBigNumber(USD[chainId].decimals)
+  //       )
+  // )
 
-  const stakedAmountFiatValue = CurrencyAmount.fromRawAmount(
-    USD[chainId],
-    farm.pair.type === PairType.KASHI
-      ? kashiPair && stakedAmount
-        ? getUSDValue(
-            BigNumber.from(stakedAmount.quotient.toString()).mulDiv(
-              kashiPair.currentAllAssets.value,
-              kashiPair.totalAsset.base
-            ),
-            kashiPair.asset
-          ).toString()
-        : ZERO
-      : JSBI.BigInt(
-          ((Number(stakedAmount?.toExact() ?? '0') * farm.pair.reserveUSD) / farm.pair.totalSupply)
-            .toFixed(USD[chainId].decimals)
-            .toBigNumber(USD[chainId].decimals)
-        )
-  )
+  // const stakedAmountFiatValue = CurrencyAmount.fromRawAmount(
+  //   USD[chainId],
+  //   farm.pair.type === PairType.KASHI
+  //     ? kashiPair && stakedAmount
+  //       ? getUSDValue(
+  //           BigNumber.from(stakedAmount.quotient.toString()).mulDiv(
+  //             kashiPair.currentAllAssets.value,
+  //             kashiPair.totalAsset.base
+  //           ),
+  //           kashiPair.asset
+  //         ).toString()
+  //       : ZERO
+  //     : JSBI.BigInt(
+  //         ((Number(stakedAmount?.toExact() ?? '0') * farm.pair.reserveUSD) / farm.pair.totalSupply)
+  //           .toFixed(USD[chainId].decimals)
+  //           .toBigNumber(USD[chainId].decimals)
+  //       )
+  // )
 
   const parsedDepositValue = tryParseAmount(depositValue, liquidityToken)
   const parsedWithdrawValue = tryParseAmount(withdrawValue, liquidityToken)
@@ -115,22 +115,22 @@ const ManageBar = ({ farm }) => {
   const depositError = !parsedDepositValue
     ? 'Enter an amount'
     : balance?.lessThan(parsedDepositValue)
-    ? 'Insufficient balance'
-    : undefined
+      ? 'Insufficient balance'
+      : undefined
 
   const isDepositValid = !depositError
 
   const withdrawError = !parsedWithdrawValue
     ? 'Enter an amount'
     : stakedAmount.lessThan(parsedWithdrawValue)
-    ? 'Insufficient balance'
-    : undefined
+      ? 'Insufficient balance'
+      : undefined
 
   const isWithdrawValid = !withdrawError
 
   return (
     <div className="flex flex-col space-y-2">
-      <div className="flex items-center justify-between pb-2">
+      {/* <div className="flex items-center justify-between pb-2">
         <Switch.Group>
           <div className="flex items-center">
             <Switch
@@ -252,7 +252,7 @@ const ManageBar = ({ farm }) => {
             </ButtonError>
           )}
         </div>
-      )}
+      )} */}
     </div>
   )
 }
