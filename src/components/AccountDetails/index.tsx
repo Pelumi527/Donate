@@ -53,7 +53,7 @@ const AccountDetails: FC<AccountDetailsProps> = ({
   openOptions,
 }) => {
   const { i18n } = useLingui()
-  const { chainId, account, connector } = useActiveWeb3React()
+  const { chainId, account, connector, deactivate } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
 
   function formatConnectorName() {
@@ -84,7 +84,7 @@ const AccountDetails: FC<AccountDetailsProps> = ({
           <Button
             onClick={async () => {
               // casting as PortisConnector here defeats the lazyload purpose
-              ;(connector as any).portis.showPortis()
+              ; (connector as any).portis.showPortis()
             }}
           >
             Show Portis
@@ -118,7 +118,7 @@ const AccountDetails: FC<AccountDetailsProps> = ({
                     color="gray"
                     size="xs"
                     onClick={() => {
-                      ;(connector as any).close()
+                      deactivate()
                     }}
                   >
                     {i18n._(t`Disconnect`)}

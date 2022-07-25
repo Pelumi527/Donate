@@ -63,52 +63,52 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     color: '#4196FC',
     mobile: true,
   },
-  KEYSTONE: {
-    connector: async () => {
-      const KeystoneConnector = (await import('@keystonehq/keystone-connector')).KeystoneConnector
-      return new KeystoneConnector({
-        chainId: 1,
-        url: RPC[ChainId.ETHEREUM],
-      })
-    },
-    name: 'Keystone',
-    iconName: 'keystone.png',
-    description: 'Connect to Keystone hardware wallet.',
-    href: null,
-    color: '#4196FC',
-    mobile: true,
-  },
-  LATTICE: {
-    connector: async () => {
-      const LatticeConnector = (await import('@web3-react/lattice-connector')).LatticeConnector
-      return new LatticeConnector({
-        chainId: 1,
-        url: RPC[ChainId.ETHEREUM],
-        appName: 'SushiSwap',
-      })
-    },
-    name: 'Lattice',
-    iconName: 'lattice.png',
-    description: 'Connect to GridPlus Wallet.',
-    href: null,
-    color: '#40a9ff',
-    mobile: true,
-  },
-  WALLET_LINK: {
-    connector: async () => {
-      const WalletLinkConnector = (await import('@web3-react/walletlink-connector')).WalletLinkConnector
-      return new WalletLinkConnector({
-        url: RPC[ChainId.ETHEREUM],
-        appName: 'SushiSwap',
-        appLogoUrl: 'https://raw.githubusercontent.com/sushiswap/art/master/sushi/logo-256x256.png',
-      })
-    },
-    name: 'Coinbase Wallet',
-    iconName: 'coinbase.svg',
-    description: 'Use Coinbase Wallet app on mobile device',
-    href: null,
-    color: '#315CF5',
-  },
+  // KEYSTONE: {
+  //   connector: async () => {
+  //     const KeystoneConnector = (await import('@keystonehq/keystone-connector')).KeystoneConnector
+  //     return new KeystoneConnector({
+  //       chainId: 1,
+  //       url: RPC[ChainId.ETHEREUM],
+  //     })
+  //   },
+  //   name: 'Keystone',
+  //   iconName: 'keystone.png',
+  //   description: 'Connect to Keystone hardware wallet.',
+  //   href: null,
+  //   color: '#4196FC',
+  //   mobile: true,
+  // },
+  // LATTICE: {
+  //   connector: async () => {
+  //     const LatticeConnector = (await import('@web3-react/lattice-connector')).LatticeConnector
+  //     return new LatticeConnector({
+  //       chainId: 1,
+  //       url: RPC[ChainId.ETHEREUM],
+  //       appName: 'SushiSwap',
+  //     })
+  //   },
+  //   name: 'Lattice',
+  //   iconName: 'lattice.png',
+  //   description: 'Connect to GridPlus Wallet.',
+  //   href: null,
+  //   color: '#40a9ff',
+  //   mobile: true,
+  // },
+  // WALLET_LINK: {
+  //   connector: async () => {
+  //     const WalletLinkConnector = (await import('@web3-react/walletlink-connector')).WalletLinkConnector
+  //     return new WalletLinkConnector({
+  //       url: RPC[ChainId.ETHEREUM],
+  //       appName: 'SushiSwap',
+  //       appLogoUrl: 'https://raw.githubusercontent.com/sushiswap/art/master/sushi/logo-256x256.png',
+  //     })
+  //   },
+  //   name: 'Coinbase Wallet',
+  //   iconName: 'coinbase.svg',
+  //   description: 'Use Coinbase Wallet app on mobile device',
+  //   href: null,
+  //   color: '#315CF5',
+  // },
   COINBASE_LINK: {
     name: 'Open in Coinbase Wallet',
     iconName: 'coinbase.svg',

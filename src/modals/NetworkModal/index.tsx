@@ -67,16 +67,16 @@ export const SUPPORTED_NETWORKS: {
     rpcUrls: ['https://polygon-rpc.com'], // ['https://matic-mainnet.chainstacklabs.com/'],
     blockExplorerUrls: ['https://polygonscan.com'],
   },
-  [ChainId.HECO]: {
-    chainId: '0x80',
-    chainName: 'Heco',
+  [ChainId.MATIC_TESTNET]: {
+    chainId: '0x13881',
+    chainName: 'Mumbai',
     nativeCurrency: {
-      name: 'Heco Token',
-      symbol: 'HT',
+      name: 'Matic',
+      symbol: 'MATIC',
       decimals: 18,
     },
-    rpcUrls: ['https://http-mainnet.hecochain.com'],
-    blockExplorerUrls: ['https://hecoinfo.com'],
+    rpcUrls: ['https://rpc-mumbai.maticvigil.com/'],
+    blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
   },
   [ChainId.XDAI]: {
     chainId: '0x64',
@@ -89,21 +89,18 @@ export const SUPPORTED_NETWORKS: {
     rpcUrls: ['https://rpc.xdaichain.com'],
     blockExplorerUrls: ['https://blockscout.com/poa/xdai'],
   },
-  [ChainId.HARMONY]: {
-    chainId: '0x63564C40',
-    chainName: 'Harmony',
+  [ChainId.BSC_TESTNET]: {
+    chainId: '0x61',
+    chainName: 'Binance Testnet',
     nativeCurrency: {
-      name: 'One Token',
-      symbol: 'ONE',
+      name: 'BNB',
+      symbol: 'BNB',
       decimals: 18,
     },
     rpcUrls: [
-      'https://api.harmony.one',
-      'https://s1.api.harmony.one',
-      'https://s2.api.harmony.one',
-      'https://s3.api.harmony.one',
+      'https://data-seed-prebsc-1-s1.binance.org:8545/'
     ],
-    blockExplorerUrls: ['https://explorer.harmony.one/'],
+    blockExplorerUrls: ['https://testnet.bscscan.com/'],
   },
   [ChainId.AVALANCHE]: {
     chainId: '0xA86A',
@@ -216,16 +213,16 @@ export default function NetworkModal(): JSX.Element | null {
           ChainId.MATIC,
           ChainId.FANTOM,
           ChainId.ARBITRUM,
-          ChainId.OKEX,
-          ChainId.HECO,
+          //  ChainId.OKEX,
+          // ChainId.HECO,
           ChainId.BSC,
           ChainId.XDAI,
-          ChainId.HARMONY,
+          // ChainId.HARMONY,
           ChainId.AVALANCHE,
-          ChainId.CELO,
-          ChainId.PALM,
-          ChainId.MOONRIVER,
-          // ChainId.FUSE,
+          // ChainId.CELO,
+          // ChainId.PALM,
+          ChainId.BSC_TESTNET,
+          ChainId.MATIC_TESTNET,
           ChainId.TELOS,
         ].map((key: ChainId, i: number) => {
           if (chainId === key) {

@@ -23,6 +23,7 @@ import {
   ARGENT_WALLET_DETECTOR_ABI,
   ARGENT_WALLET_DETECTOR_MAINNET_ADDRESS,
 } from '../constants/abis/argent-wallet-detector'
+import { WEB3BRIDGE_DONATION_ADDRESS } from 'src/constants/address'
 import { AddressZero } from '@ethersproject/constants'
 import BAR_ABI from '../constants/abis/bar.json'
 import BENTOBOX_ABI from '../constants/abis/bentobox.json'
@@ -54,6 +55,7 @@ import TIMELOCK_ABI from '../constants/abis/timelock.json'
 import UNI_FACTORY_ABI from '../constants/abis/uniswap-v2-factory.json'
 import WETH9_ABI from '../constants/abis/weth.json'
 import ZENKO_ABI from '../constants/abis/zenko.json'
+import WEB3BRIDGE_DONATION_ABI from '../constants/abis/web3bridge-donation.json'
 import { getContract } from '../functions/contract'
 import { useActiveWeb3React } from '../services/web3'
 import { useMemo } from 'react'
@@ -160,6 +162,11 @@ export function useFactoryContract(): Contract | null {
 export function useRouterContract(): Contract | null {
   const { chainId } = useActiveWeb3React()
   return useContract(ROUTER_ADDRESS[chainId], ROUTER_ABI, true)
+}
+
+export function useDonationContract(): Contract | null {
+  const { chainId } = useActiveWeb3React()
+  return useContract(WEB3BRIDGE_DONATION_ADDRESS[chainId], WEB3BRIDGE_DONATION_ABI, true)
 }
 
 export function useSushiBarContract(withSignerIfPossible?: boolean): Contract | null {
